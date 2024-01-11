@@ -1,0 +1,500 @@
+<ion-content>
+  <div class="head">
+    <div id="menu" class="menuBtn">
+      <ion-menu-button></ion-menu-button>
+    </div>
+    <ion-text class="title">Gestión Usuarios</ion-text>
+  </div>
+
+  <div>
+    <ion-grid class="gridGtnPro">
+      <ion-row>
+        <ion-col>
+          <ion-item class="inputSelectSmall">
+            <ion-select
+              interface="popover"
+              placeholder="Seleccione establecimiento"
+              [(ngModel)]="selectedOptionEstab"
+              (ionChange)="selectEstabChange()"
+            >
+              <ion-select-option
+                *ngFor="let option of optionsEstab"
+                [value]="option.id_establecimiento"
+                >{{option.nombre}}</ion-select-option
+              >
+            </ion-select>
+            <ion-icon
+              name="close-circle"
+              (click)="clearSelectionEstab()"
+              *ngIf="selectedOptionEstab"
+            ></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-icon
+            (click)="openModalGtnEstab()"
+            class="iconAdd"
+            name="add-outline"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-searchbar
+            class="search"
+            show-clear-button="focus"
+            placeholder="Buscar.."
+            (ionInput)="onSearchChange($event)"
+          ></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div>
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of listFilterUserEstab">
+          <ion-item
+            class="itemProd"
+            (click)="openModalDtVend(item)"
+          >
+            <div class="imgIcon">
+              <ion-img
+                src="assets/icon-seller.png"
+                slot="start"
+              ></ion-img>
+            </div>
+            <ion-label>
+              <h2>{{ item.nomb_usuario }} {{item.apell_usuario}}</h2>
+              <p>{{ item.num_ident }} - {{item.tip_usuario === 1 ? 'Administrador' : 'Estándar' }}</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item-options side="start">
+            <ion-item-option
+              color="primary"
+              expandable
+              (click)="editItem(item)"
+            >
+              <ion-icon
+                size="large"
+                style="margin-right: 10px; margin-left: 10px"
+                name="create-outline"
+              ></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+
+          <ion-item-options side="end">
+            <ion-item-option
+              color="danger"
+              expandable
+              (click)="deleteItem(item)"
+            >
+              <ion-icon
+                size="large"
+                style="margin-right: 10px; margin-left: 10px"
+                name="trash-outline"
+              ></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" style="right: 7%; bottom: 3%;">
+    <ion-fab-button (click)="addVendedores()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div>
+    <ion-modal #modalDtVend [showBackdrop]="showBackdrop" class="modalDt">
+      <ng-template>
+        <ion-content>
+          <div class="modal">
+            <div class="headModal">
+              <ion-text class="titleModal"> Vendedor </ion-text>
+            </div>
+
+            <div class="icon-modal">
+              <ion-img src="assets/icon-seller-big.png"></ion-img>
+            </div>
+
+            <div>
+              <ion-grid class="gridContent">
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Cedula: {{selectedItem?.num_ident}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Tipo usuario: {{selectedItem?.tip_usuario === 1 ? 'Administrador' : 'Estándar'}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-text>Nombres: {{selectedItem?.nomb_usuario}} {{selectedItem?.apell_usuario}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Correo electrónico: {{selectedItem?.email_usuario}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Teléfono: {{selectedItem?.telef_usuario}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Dirección: {{selectedItem?.direc_usuario}}</ion-text>
+                  </ion-col>
+                </ion-row>
+
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalForm>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="goBack()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">{{titleModalForm}}</ion-text>
+            </div>
+
+            <div style="justify-content: center; align-items: center; text-align: center;">
+              <ion-grid>
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item [disabled]="isDisabledInpTipDni" class="inputSelectBig">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Tipo de identificación"
+                        [(ngModel)]="selectedTipDni"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsTipDni"
+                          [value]="option"
+                          >{{option}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionTipDni()"
+                        *ngIf="selectedTipDni"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item [disabled]="isDisabledInpNumIdent"
+                     class="inputBig">
+                      <ion-input 
+                        clearInput
+                        [(ngModel)]="num_ident"
+                        type="numeric"
+                        placeholder="Número de identificación"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputSelectBig">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Establecimiento"
+                        [(ngModel)]="selectedEstab"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsEstab"
+                          [value]="option.id_establecimiento"
+                          >{{option.nombre}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionEstab()"
+                        *ngIf="selectedEstab"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nomb_usuario"
+                        type="text"
+                        placeholder="Nombre del usuario"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="apell_usuario"
+                        type="text"
+                        placeholder="Apellido del usuario"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="telef_usuario"
+                        type="numeric"
+                        placeholder="Télefono del usuario"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="direc_usuario"
+                        type="text"
+                        placeholder="Dirección del usuario"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="email_usuario"
+                        type="email"
+                        placeholder="Correo electrónico"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputSelectBig">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Tipo de usuario"
+                        [(ngModel)]="selectedTipUser"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsTipUser"
+                          [value]="option"
+                          >{{option}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionTipUser()"
+                        *ngIf="selectedTipUser"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="contrasenia"
+                        type="password"
+                        placeholder="Contraseña del usuario"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnFormVend()" class="btnModalForm"
+                      >{{nameBtnModalForm}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalGtnEstab>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="closeModalGtnEstab()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">Gestión Establecimientos</ion-text>
+            </div>
+
+            <div>
+              <ion-grid>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item style="margin-top: 20px;" class="inputSelectBig">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Seleccione establecimiento para modificar o eliminar"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptEstabGtn"
+                        (ionChange)="selectEstabGtnChange()"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsEstab"
+                          [value]="option.id_establecimiento"
+                          >{{option.nombre}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionEstabGtn()"
+                        *ngIf="selectedOptEstabGtn"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSelectBig" [disabled]="isDisabledInpTienda">
+                      <ion-select
+                        interface="popover"
+                        [(ngModel)]="selectedOptTiendaGtn"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsTienda"
+                          [value]="option.id_tienda"
+                          >{{option.ruc}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionTiendaGtn()"
+                        *ngIf="selectedOptTiendaGtn"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nombre"
+                        type="text"
+                        placeholder="Nombre establecimiento"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="telefono"
+                        type="text"
+                        placeholder="Teléfono establecimiento"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="direccion"
+                        type="text"
+                        placeholder="Dirección establecimiento"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="email"
+                        type="email"
+                        placeholder="Correo electrónico"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+          
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnGtnProm()" class="btnModalForm"
+                      >{{btnNameGtnEstab}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button style="margin-top: 5px;" class="btnModalForm" [disabled]="isDisabledBtnElim"
+                      (click)="actionDeleteEstab()" >Eliminar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+
+</ion-content>

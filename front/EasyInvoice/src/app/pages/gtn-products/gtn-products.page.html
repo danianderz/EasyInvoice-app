@@ -1,0 +1,608 @@
+<ion-content>
+  <div class="head">
+    <div id="menu" class="menuBtn">
+      <ion-menu-button></ion-menu-button>
+    </div>
+    <ion-text class="title">Gestión Productos</ion-text>
+  </div>
+
+  <div>
+    <ion-grid class="gridGtnPro">
+      <ion-row>
+        <ion-col>
+          <ion-searchbar
+            class="search"
+            show-clear-button="focus"
+            placeholder="Buscar.."
+            (ionInput)="onSearchChange($event)"
+          ></ion-searchbar>
+        </ion-col>
+        <ion-col>
+          <ion-button
+            [disabled]="selectedItems.length === 0"
+            (click)="vender()"
+          >
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div>
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of items" (press)="selectItem(item)">
+          <ion-item
+            class="itemProd"
+            (click)="openModalDtProd(item)"
+            [class.selected]="isSelected(item)"
+          >
+            <div class="imgIcon">
+              <ion-img
+                src="assets/icon/articulos-de-compra.png"
+                slot="start"
+              ></ion-img>
+            </div>
+            <ion-label>
+              <h2>{{ item.nom_producto }}</h2>
+              <p>{{ item.precio }}</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item-options side="start">
+            <ion-item-option
+              color="primary"
+              expandable
+              (click)="editItem(item)"
+            >
+            <ion-icon size="large" style="margin-right: 10px; margin-left: 10px;" name="create-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+
+          <ion-item-options side="end">
+            <ion-item-option
+              color="danger"
+              expandable
+              (click)="deleteItem(item)"
+            >
+            <ion-icon size="large" style="margin-right: 10px; margin-left: 10px;" name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" style="right: 7%; bottom: 3%;">
+    <ion-fab-button (click)="addProducts()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div>
+    <ion-modal #modalDtProd [showBackdrop]="showBackdrop" class="modalDt">
+      <ng-template>
+        <ion-content>
+          <div class="modal">
+            <div class="headModal">
+              <ion-text class="titleModal"> Producto </ion-text>
+            </div>
+
+            <div class="icon-modal">
+              <ion-img src="assets/icon/icon_art_com_modal.png"></ion-img>
+            </div>
+
+            <div>
+              <ion-grid class="gridContent">
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Código: {{selectedItem?.codigo_barras}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-text>Nombre: {{selectedItem?.nom_producto}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Descripción: {{selectedItem?.descrip_prod}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Promoción: {{prom_pro}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Categoría: {{categ_pro}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-text>Unidades disponibles: {{selectedItem?.unidades_dispon}}</ion-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-text>Precio: {{selectedItem?.precio}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-item class="inputCant">
+                <ion-input
+                  label="Cantidad"
+                  type="number"
+                  placeholder="000"
+                  min="0"
+                  pattern="^[0-9]+$"
+                ></ion-input>
+              </ion-item>
+              <ion-button class="btnModal"> Vender </ion-button>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalForm>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="goBack()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">{{titleModalForm}}</ion-text>
+            </div>
+
+            <div style="justify-content: center; align-items: center; text-align: center;">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item [disabled]="isDisabledInpCodProd"
+                     class="inputBig" style="margin-top: 20px">
+                      <ion-input 
+                        clearInput
+                        [(ngModel)]="codigo_barras"
+                        type="text"
+                        placeholder="Código del producto"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nom_producto"
+                        type="text"
+                        placeholder="Nombre del producto"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="descrip_prod"
+                        type="text"
+                        placeholder="Descripción del producto"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSmall">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="precio"
+                        type="numeric"
+                        placeholder="Precio"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item class="inputNum">
+                      <ion-input
+                        [(ngModel)]="unidades_dispon"
+                        type="number"
+                        placeholder="Unidades"
+                        min="0"
+                        pattern="^[0-9]+$"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSelectSmall">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Categoría"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptionCateg"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsCateg"
+                          [value]="option.id_categ"
+                          >{{option.nom_categ}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionCateg()"
+                        *ngIf="selectedOptionCateg"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-icon (click)="openModalFormCateg()" class="iconAdd" name="add-outline"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="margin-top: 10px">
+                  <ion-col>
+                    <ion-item class="inputSelectSmall">
+                      <ion-select
+                        interface="popover"
+                        placeholder="IVA"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptionIVA"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsIva"
+                          [value]="option.id_categ_iva"
+                          >{{option.nomb_categ_iva}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionIVA()"
+                        *ngIf="selectedOptionIVA"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-icon (click)="openModalFormIVA()" class="iconAdd" name="add-outline"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="margin-top: 10px">
+                  <ion-col>
+                    <ion-item class="inputSelectSmall">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Promoción"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptionProm"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsProm"
+                          [value]="option.id_prom"
+                          >{{option.nom_prom}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionProm()"
+                        *ngIf="selectedOptionProm"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-icon (click)="openModalFormProm()" class="iconAdd" name="add-outline"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnFormProd()" class="btnVender"
+                      >{{nameBtnModalForm}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalFormCateg>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="closeModalFormCateg()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">Gestión Categorías</ion-text>
+            </div>
+
+            <div>
+              <ion-grid>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSelectCateg">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Seleccione categoría para modifcar o eliminar"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptCategGtn"
+                        (ionChange)="selectCategChange()"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsCateg"
+                          [value]="option.id_categ"
+                          >{{option.nom_categ}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionCategGtn()"
+                        *ngIf="selectedOptCategGtn"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nom_categ"
+                        type="text"
+                        placeholder="Nombre de la categoría"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="descr_categ"
+                        type="text"
+                        placeholder="Descripción de la categoría"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+          
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnGtnCateg()" class="btnVender"
+                      >{{btnNameGtnCateg}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button class="btnVender" [disabled]="isDisabledBtnElim"
+                      (click)="actionDeleteCateg()" >Eliminar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalFormIVA>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="closeModalFormIVA()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">Gestión IVA</ion-text>
+            </div>
+
+            <div>
+              <ion-grid>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSelectCateg">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Seleccione IVA para modificar o eliminar"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptIVAGtn"
+                        (ionChange)="selectIVAChange()"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsIva"
+                          [value]="option.id_categ_iva"
+                          >{{option.nomb_categ_iva}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionIVAGtn()"
+                        *ngIf="selectedOptIVAGtn"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nom_iva"
+                        type="text"
+                        placeholder="Nombre del IVA"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="valor_iva"
+                        type="numeric"
+                        placeholder="Valor porcentual del IVA"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+          
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnGtnIVA()" class="btnVender"
+                      >{{btnNameGtnIVA}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button class="btnVender" [disabled]="isDisabledBtnElim"
+                      (click)="actionDeleteIVA()" >Eliminar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div>
+    <ion-modal class="modalForm" #modalFormProm>
+      <ng-template>
+        <ion-content>
+          <div class="modalContentForm">
+            <div class="headModalForm">
+              <div>
+                <ion-icon style="margin-right: 50px; margin-left: -80px;"
+                  class="iconBack"
+                  name="chevron-back-outline"
+                  (click)="closeModalFormProm()"
+                ></ion-icon>
+              </div>
+              <ion-text class="titleModal">Gestión promociones</ion-text>
+            </div>
+
+            <div>
+              <ion-grid>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputSelectCateg">
+                      <ion-select
+                        interface="popover"
+                        placeholder="Seleccione promoción para modificar o eliminar"
+                        style="margin-top: -10px; margin-bottom: -10px"
+                        [(ngModel)]="selectedOptPromGtn"
+                        (ionChange)="selectPromChange()"
+                      >
+                        <ion-select-option
+                          *ngFor="let option of optionsProm"
+                          [value]="option.id_prom"
+                          >{{option.nom_prom}}</ion-select-option
+                        >
+                      </ion-select>
+                      <ion-icon
+                        name="close-circle"
+                        (click)="clearSelectionPromGtn()"
+                        *ngIf="selectedOptPromGtn"
+                      ></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="nom_prom"
+                        type="text"
+                        placeholder="Nombre promoción"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="descr_prom"
+                        type="text"
+                        placeholder="Descripción promoción"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-item class="inputBig">
+                      <ion-input
+                        clearInput
+                        [(ngModel)]="valor_prom"
+                        type="numeric"
+                        placeholder="Valor porcentual del descuento"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+          
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="handleBtnGtnProm()" class="btnVender"
+                      >{{btnNameGtnProm}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button class="btnVender" [disabled]="isDisabledBtnElim"
+                      (click)="actionDeleteProm()" >Eliminar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+</ion-content>

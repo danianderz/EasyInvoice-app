@@ -1,0 +1,248 @@
+ion-content {
+  --background: white;
+}
+
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12%;
+  background-color: #063970;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  width: 100%;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+ion-menu-button {
+  position: static;
+  font-size: 42px;
+  color: white;
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -80px;
+  margin-right: 15%;
+}
+
+.search {
+  width: 275px;
+  height: 43px;
+  margin-top: 2px;
+  margin-left: -20px;
+  text-align: left;
+  --placeholder-color: black;
+  --border-radius: 10px;
+  --border-color: #063970;
+}
+
+ion-button {
+  --border-radius: 8px;
+  width: 75px;
+  height: 40px;
+  font-weight: bold;
+  font-size: smaller;
+  --color: white;
+  --background: #063970;
+  --background-activated: #47667b;
+}
+
+.imgIcon {
+  margin-right: 10px;
+}
+
+.itemProd {
+  margin-right: 15px;
+}
+
+.modalDt {
+  --height: 65%;
+  --border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.modalForm {
+  --height: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  --border-radius: 0px;
+}
+
+.headModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12%;
+  background-color: #063970;
+  width: 100%;
+}
+
+.titleModal {
+  color: #f3f3f3;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+.modal {
+  display: block;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f3f3f3;
+}
+
+.modalContentForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #3d648d;
+}
+
+.icon-modal {
+  height: 90px;
+  width: 90px;
+  margin-left: 35%;
+  margin-top: 10px;
+}
+
+.gridContent {
+  margin-left: 3%;
+  margin-top: 10px;
+}
+
+.btnModal {
+  --border-radius: 8px;
+  width: 225px;
+  height: 40px;
+  margin-left: 15%;
+  margin-top: 25px;
+  font-weight: bold;
+  font-size: smaller;
+  --color: white;
+  --background: #063970;
+  --background-activated: #47667b;
+}
+
+.inputCant {
+  width: 295px;
+  --background: #f3f3f3;
+  margin-left: 3px;
+}
+
+.iconBack {
+  position: static;
+  font-size: 42px;
+  color: white;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+.gridGtnPro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.inputBig {
+  border-radius: 15px;
+  margin-bottom: 10px;
+  width: 360px;
+  --background: #3d648d;
+  border: 2px solid white;
+  --border-color: transparent;
+  color: white;
+}
+
+.inputSmall {
+  border-radius: 15px;
+  margin-bottom: 10px;
+  width: 170px;
+  --background: #3d648d;
+  border: 2px solid white;
+  color: white;
+}
+
+.inputNum {
+  width: 150px;
+  height: 55px;
+  --background: #3d648d;
+  border: 2px solid white;
+  border-radius: 14px;
+  color: white;
+}
+
+.headModalForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12%;
+  background-color: #063970;
+  width: 100%;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.inputSelectSmall {
+  width: 290px;
+  height: 58px;
+  border-radius: 12px;
+  border: 2px solid white;
+  --background: #3d648d;
+  margin-left: 0px;
+  color: white;
+}
+
+.inputSelectCateg {
+  width: 360px;
+  height: 60px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 2px solid white;
+  --background: #3d648d;
+  margin-left: 0px;
+  color: white;
+}
+
+.iconAdd {
+  color: white;
+  height: 43px;
+  width: 43px;
+  margin-top: 1px;
+  margin-left: 6px;
+}
+
+.btnVender {
+  --border-radius: 10px;
+  width: 355px;
+  height: 45px;
+  font-weight: bold;
+  font-size: medium;
+  margin-top: 10px;
+  --color: white;
+  --background: #063970;
+  --background-activated: #2b3e4a;
+}

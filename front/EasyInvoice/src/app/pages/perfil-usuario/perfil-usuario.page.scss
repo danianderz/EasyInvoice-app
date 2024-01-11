@@ -1,0 +1,124 @@
+ion-content {
+  --background: white;
+}
+
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12%;
+  background-color: #063970;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  width: 100%;
+}
+.contentUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 115px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+ion-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-col {
+  text-align: right;
+  margin-right: 20px;
+}
+
+ion-button {
+  --border-radius: 8px;
+  width: 345px;
+  height: 45px;
+  font-weight: bold;
+  font-size: large;
+  --color: white;
+  --background: #063970;
+  --background-activated: #47667b;
+}
+
+ion-menu-button {
+  position: static;
+  font-size: 42px;
+  color: white;
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -80px;
+  margin-right: 15%;
+}
+
+ion-modal {
+  --height: 45%;
+  --border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.headModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 13%;
+  background-color: #063970;
+  width: 100%;
+}
+
+.titleModal {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f3f3f3;
+}
+
+.inputPassword {
+  --border-radius: 8px;
+  margin-top: 20px;
+  width: 325px;
+}
+
+.btnModal {
+  --border-radius: 8px;
+  margin-top: 25px;
+  width: 325px;
+  height: 45px;
+  font-weight: bold;
+  font-size: large;
+  --color: white;
+  --background: #063970;
+  --background-activated: #47667b;
+}

@@ -1,0 +1,199 @@
+ion-content {
+  --background: white;
+}
+
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12%;
+  background-color: #063970;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  width: 100%;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+ion-menu-button {
+  position: static;
+  font-size: 42px;
+  color: white;
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -75px;
+  margin-right: 12%;
+}
+
+.gridGtnPro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.inputSelectSmall {
+  margin-top: 10px;
+  width: 300px;
+  height: 58px;
+  border-radius: 12px;
+  border: 3px solid #063970;
+  --background: white;
+  margin-left: 0px;
+  color: #063970;
+  font-weight: bold;
+}
+
+.iconAdd {
+  color: #063970;
+  height: 43px;
+  width: 43px;
+  margin-top: 17px;
+}
+
+.iconBack {
+  position: static;
+  font-size: 42px;
+  color: white;
+}
+
+.search {
+  width: 360px;
+  margin-top: 5px;
+  margin-left: -10px;
+  text-align: left;
+  --placeholder-color: black;
+  --border-radius: 10px;
+  --border-color: #063970;
+}
+
+.imgVend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 115px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.imgIcon {
+  margin-right: 10px;
+}
+
+.itemProd {
+  margin-right: 15px;
+}
+
+.modalDt {
+  --height: 45%;
+  --border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.modalForm {
+  --height: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  --border-radius: 0px;
+}
+
+.headModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 13%;
+  background-color: #063970;
+  width: 100%;
+}
+
+.titleModal {
+  color: #f3f3f3;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Lora";
+  width: auto;
+  text-align: center;
+}
+
+.modal {
+  display: block;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f3f3f3;
+}
+
+.modalContentForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #3d648d;
+}
+
+.icon-modal {
+  height: 90px;
+  width: 90px;
+  margin-left: 35%;
+  margin-top: 20px;
+  margin-bottom:20px ;
+}
+
+.gridContent {
+  margin-left: 3%;
+  margin-top: 10px;
+}
+
+.btnModalForm {
+  --border-radius: 8px;
+  width: 355px;
+  height: 45px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: smaller;
+  --color: white;
+  --background: #063970;
+  --background-activated: #47667b;
+}
+
+.headModalForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 9%;
+  background-color: #063970;
+  width: 100%;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.inputBig {
+  border-radius: 15px;
+  width: 360px;
+  height: 55px;
+  --background: #3d648d;
+  border: 2px solid white;
+  --border-color: transparent;
+  color: white;
+}
+
+.inputSelectBig {
+  width: 360px;
+  height: 55px;
+  border-radius: 12px;
+  border: 2px solid white;
+  --background: #3d648d;
+  color: white;
+}

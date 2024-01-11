@@ -1,0 +1,154 @@
+<ion-content>
+  <div class="head">
+    <div id="menu" class="menuBtn">
+      <ion-menu-button></ion-menu-button>
+    </div>
+    <ion-text class="title">Perfil de Usuario</ion-text>
+  </div>
+
+  <div class="contentUser">
+    <ion-img
+      src="assets/icon-user.png"
+      size="large"
+      class="logo"
+    ></ion-img>
+
+    <ion-grid style="--ion-grid-padding: 0">
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Establecimiento: {{ estab_per }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+      
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Número de identificación: {{ num_ident }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Nombres de usuario: {{ names }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Teléfono: {{ phone }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Correo Electrónico: {{ email }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Tipo usuario: {{ tip_usuario === 1 ? 'Administrador' : 'Estándar' }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-bottom: 15px">
+        <ion-col size="auto">
+          <ion-text style="color: black; width: auto"
+            >Direccion: {{ direccion }}</ion-text
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button id="open-modal">Cambiar contraseña</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div>
+    <ion-modal #modal trigger="open-modal" [showBackdrop]="showBackdrop">
+      <ng-template>
+        <ion-content>
+          <div class="modal">
+            <div class="headModal">
+              <ion-text class="titleModal">Cambiar Contraseña</ion-text>
+            </div>
+            <ion-item class="inputPassword">
+              <ion-input
+                [(ngModel)]="passwordCurrent"
+                clearInput
+                type="password"
+                placeholder="Contraseña actual"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-item class="inputPassword">
+              <ion-input
+                [(ngModel)]="passwordNew"
+                clearInput
+                type="password"
+                placeholder="Contraseña nueva"
+                required
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item class="inputPassword">
+              <ion-input
+                [(ngModel)]="confPassword"
+                clearInput
+                type="password"
+                placeholder="Confirmar contraseña"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-button (click)="changePassword()" class="btnModal"
+              >Confirmar</ion-button
+            >
+
+            <ion-text
+              color="danger"
+              *ngIf="wrongPasswCurrent.invalid && (wrongPasswCurrent.dirty || wrongPasswCurrent.touched)"
+            >
+              <ion-label
+                *ngIf="wrongPasswCurrent.errors?.hasOwnProperty('required')"
+                >Contraseña actual incorrecta</ion-label
+              >
+            </ion-text>
+            <ion-text
+              color="danger"
+              *ngIf="wrongPassword.invalid && (wrongPassword.dirty || wrongPassword.touched)"
+            >
+              <ion-label
+                *ngIf="wrongPassword.errors?.hasOwnProperty('required')"
+                >Las contraseñas no coinciden</ion-label
+              >
+            </ion-text>
+            <ion-text
+              color="danger"
+              *ngIf="isEmptyInputText.invalid && (isEmptyInputText.dirty || isEmptyInputText.touched)"
+            >
+              <ion-label
+                *ngIf="isEmptyInputText.errors?.hasOwnProperty('required')"
+                >Todos los campos son obligatorios</ion-label
+              >
+            </ion-text>
+          </div>
+
+          <ion-alert class="custom-alert"></ion-alert>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+</ion-content>
